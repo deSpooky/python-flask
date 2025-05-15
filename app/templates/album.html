@@ -1,0 +1,28 @@
+{% extends 'base.html' %}
+{% block title %}ALBUM{% endblock %}
+{% block content %}
+<h2>{{ album.title }}</h2>
+<p>LAUNCHED: {{ album.release_date.strftime('%d.%m.%Y') }}</p>
+
+<h3>TRACKS</h3>
+<ul>
+    {% for track in album.tracks %}
+        <li>
+            {{ track.title }}
+            {% if current_user.is_authenticated %}
+                <a href="{{ url_for('main.like', track_id=track.id) }}">🖤</a>
+                ({{ track.likes.count() }})
+            {% endif %}
+        </li>
+    {% endfor %}
+</ul>
+
+{% if current_user.is_authenticated %}
+    <h3>ADD TRACK</h3>
+    <form method="post">
+        {{ form.hidden_tag() }}
+        {{ form.title.label }} {{ form.title(size=32) }}
+        {{ form.submit() }}
+    </form>
+{% endif %}
+{% endblock %}

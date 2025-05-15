@@ -1,0 +1,14 @@
+{% extends 'base.html' %}
+{% block title %}ALBUMS{% endblock %}
+{% block content %}
+<h2>ALL ALBUMS</h2>
+<ul>
+    {% for album in albums %}
+        <li>
+            <a href="{{ url_for('main.album', album_id=album.id) }}">
+                {{ album.title }} ({{ album.release_date.strftime('%Y') }})
+            </a>
+        </li>
+    {% endfor %}
+</ul>
+{% endblock %}

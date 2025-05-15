@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>{% block title %}СПУКИ{% endblock %}</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <header>
+        <h1><a href="{{ url_for('main.index') }}">SPOOKY MIX</a></h1>
+        <nav>
+            <a href="{{ url_for('main.albums') }}">ALBUMS</a>
+            {% if current_user.is_authenticated %}
+                <a href="{{ url_for('main.add_album') }}">ADD ALBUM</a>
+                <a href="{{ url_for('main.logout') }}">LEAVE</a>
+            {% else %}
+                <a href="{{ url_for('main.login') }}">LOGIN</a>
+                <a href="{{ url_for('main.register') }}">REGISTER</a>
+            {% endif %}
+        </nav>
+    </header>
+    <main>
+        {% with messages = get_flashed_messages() %}
+            {% if messages %}
+                <ul class="flash">
+                    {% for message in messages %}
+                        <li>{{ message }}</li>
+                    {% endfor %}
+                </ul>
+            {% endif %}
+        {% endwith %}
+        {% block content %}{% endblock %}
+    </main>
+</body>
+</html>
